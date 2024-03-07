@@ -16,6 +16,9 @@ def clean_commit_message(response):
 def get_staged_changeset():
     return subprocess.run(["git", "diff", "--cached"], capture_output=True).stdout.splitlines()
 
+def commit(finalCommitMessage):
+    subprocess.run(["git", "commit", "-m", finalCommitMessage])
+
 def is_staged_changes(currentDiff):
     if(len(currentDiff) == 0):
         print("No staged changes")
@@ -31,13 +34,23 @@ def calculate_final_commit_message(response):
     print(f"Commit message: {cleanedCommitMessage}")
     return cleanedCommitMessage
 
+def dowork(currentDiff):
+    response = get_response(f"You are an expert programmer that writes simple, concise code and explanations. Write a commit message for the following diff (I am using this in a program so give me JUST the message): {currentDiff}")
+    return calculate_final_commit_message(response)
+
+def commit_when_happy(currentDiff):
+    while True:
+        finalCommitMessage = dowork(currentDiff)
+        print(f"Final commit message: {finalCommitMessage}")
+        if(input("Are you happy with this commit message? (y/n) ").lower() == "y"):
+            break
+    commit(finalCommitMessage)
+
 def main():
     currentDiff = get_staged_changeset()
     if(not is_staged_changes(currentDiff)):
         return
-    response = get_response(f"You are an expert programmer that writes simple, concise code and explanations. Write a commit message for the following diff (I am using this in a program so give me JUST the message): {currentDiff}")
-    finalCommitMessage = calculate_final_commit_message(response)
-    print(f"Final commit message: {finalCommitMessage}")
+    commit_when_happy(currentDiff)
 
 if __name__ == "__main__":
     main()
