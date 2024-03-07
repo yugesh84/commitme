@@ -22,11 +22,7 @@ def is_staged_changes(currentDiff):
         return False
     return True
 
-def main():
-    currentDiff = get_staged_changeset()
-    if(not is_staged_changes(currentDiff)):
-        return
-    response = get_response(f"You are an expert programmer that writes simple, concise code and explanations. Write a commit message for the following diff (I am using this in a program so give me JUST the message): {currentDiff}")
+def calculate_final_commit_message(response):
     cleanedCommitMessage = clean_commit_message(response)
     if(cleanedCommitMessage == "" or cleanedCommitMessage == "\n"):
         print("No commit message available after cleanup - returning original response from AI")
@@ -34,6 +30,14 @@ def main():
         return response
     print(f"Commit message: {cleanedCommitMessage}")
     return cleanedCommitMessage
+
+def main():
+    currentDiff = get_staged_changeset()
+    if(not is_staged_changes(currentDiff)):
+        return
+    response = get_response(f"You are an expert programmer that writes simple, concise code and explanations. Write a commit message for the following diff (I am using this in a program so give me JUST the message): {currentDiff}")
+    finalCommitMessage = calculate_final_commit_message(response)
+    print(f"Final commit message: {finalCommitMessage}")
 
 if __name__ == "__main__":
     main()
