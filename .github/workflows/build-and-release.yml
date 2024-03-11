@@ -21,7 +21,7 @@ jobs:
     - name: Install PyInstaller
       run: pip install pyinstaller
     - name: Build Binary with PyInstaller
-      run: pyinstaller --onefile -n commitme hello_world.py
+      run: pyinstaller --onefile -n commitme commitme.py
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
@@ -49,7 +49,7 @@ jobs:
     - name: Install PyInstaller
       run: pip install pyinstaller
     - name: Build Binary with PyInstaller for macOS
-      run: pyinstaller --onefile -n commitme hello_world.py
+      run: pyinstaller --onefile -n commitme commitme.py
     - name: Upload macOS Release Asset
       uses: actions/upload-release-asset@v1
       env:
