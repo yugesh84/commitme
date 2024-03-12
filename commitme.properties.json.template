@@ -1,0 +1,11 @@
+{
+    "localModel": {
+      "name": "codellama"
+    },
+    "openAI": {
+      "organizationId": "",
+      "apiKey": "",
+      "model": "gpt-4"
+    },
+    "use": "openAI"
+}
