@@ -8,17 +8,34 @@ This tool is a Python-based Command Line Interface (CLI) designed to generate me
 - **Language Model Integration:** Utilizes a state-of-the-art language model to understand and summarize the changes.
 - **Easy to Use:** Simple CLI interface for generating commit messages with a single command.
 
-## Installation
+## Local Development
 
-To use this tool, you need to have Python installed on your system. Follow these steps to set up the CLI:
+To use this tool locally, you need to have Python installed on your system. Follow these steps to set up the CLI:
 
 1. Clone the repository to your local machine.
 2. Navigate to the cloned directory.
-3. Install the required dependencies using `pip install -r requirements.txt`.
+3. Type the following commands to setup python environment
+```
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+4. Make a copy of `commitme.properties.json.template` and rename it to `commitme.properties.json`. Fill in the required fields in the file.
+5. Run the tool using the command `python commitme.py`
+
 
 ## Usage
 
-TBD
+Linux and macos binaries are also attached as assets to the latest release. An [example release](https://github.com/seriesfi/commitMe/releases/tag/0.0.2)
+
+Steps to use the binary:
+
+_NOTE: This will not fully work now as you'll need to carry over a properties file wherever you use the binary. This is a known issue and will be fixed in the next release._
+1. Download the binary for your OS from the latest release
+2. Rename the downloaded binary to `commitMe`
+3. Make the binary executable using `chmod +x commitMe`
+4. Add the binary to your path
+5. Run the binary using `commitMe` in your git repository. The binary will automatically detect the changes and suggest a commit message.
 
 ## Contributing
 
