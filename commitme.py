@@ -18,8 +18,10 @@ def clean_commit_message(response):
 def get_staged_changeset():
     return subprocess.run(["git", "diff", "--cached"], capture_output=True).stdout.splitlines()
 
-def commit(finalCommitMessage):
+def commit(finalCommitMessage, shouldAmend):
     subprocess.run(["git", "commit", "-m", finalCommitMessage])
+    if(shouldAmend):
+        subprocess.run(["git", "commit", "--amend"])
 
 def is_staged_changes(currentDiff):
     if(len(currentDiff) == 0):
@@ -45,9 +47,18 @@ def commit_when_happy(currentDiff, properties):
     while True:
         finalCommitMessage = get_response_from_ai(currentDiff, properties)
         print(f"Final commit message: {finalCommitMessage}")
-        if(input("Are you happy with this commit message? (y/n) ").lower() == "y"):
-            break
-    commit(finalCommitMessage)
+        userInput = input("Are you happy with this commit message? [(y)es/(n)o/(a)mend/(q)uit] ").lower()
+        match userInput:
+            case "y":
+                commit(finalCommitMessage, False)
+                break
+            case "a":
+                commit(finalCommitMessage, True)
+                break
+            case "q":
+                return
+            case _:
+                continue
 
 def get_response_from_open_ai(currentDiff, properties):
     from openai import OpenAI
