@@ -22,18 +22,15 @@ jobs:
       run: pip install pyinstaller
     - name: Build Binary with PyInstaller
       run: pyinstaller --onefile -n commitme commitme.py
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload Linux Release Asset
+      uses: softprops/action-gh-release@v2
       with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./dist/commitme
-        asset_name: commitme-${{ github.run_number }}
-        asset_content_type: application/octet-stream
+        name: ${{ github.event.release.tag_name }}-linux
+        files: |
+          ./dist/commitme
+          commitme.properties.template
 
   build-macos:
-        # needs: build
     runs-on: macos-latest
     permissions: write-all
     steps:
@@ -51,11 +48,9 @@ jobs:
     - name: Build Binary with PyInstaller for macOS
       run: pyinstaller --onefile -n commitme commitme.py
     - name: Upload macOS Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v2
       with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./dist/commitme
-        asset_name: commitme-macos-${{ github.run_number }}
-        asset_content_type: application/octet-stream
+        name: ${{ github.event.release.tag_name }}-macos
+        files: |
+          ./dist/commitme
+          commitme.properties.template

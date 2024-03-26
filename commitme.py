@@ -81,7 +81,8 @@ def get_response_from_open_ai(currentDiff, properties):
     return collectedData
 
 def load_properties():
-    with open("commitme.properties.json") as f:
+    from pathlib import Path
+    with open(Path.home()/"commitme.properties.json") as f:
         properties = json.load(f)
     return properties
 
