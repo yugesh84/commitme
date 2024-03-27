@@ -1,0 +1,11 @@
+name: Checkout Code
+
+on: push
+
+jobs:
+  checkout_code:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Pass
+      run: echo "Checkout complete, passing..."
