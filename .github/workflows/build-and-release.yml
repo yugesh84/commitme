@@ -23,12 +23,21 @@ jobs:
     - name: Build Binary with PyInstaller
       run: pyinstaller --onefile -n commitme commitme.py
     - name: Upload Linux Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: linux-binary
-        path: |
-          ./dist/commitme
-          commitme.properties.json.template
+        asset_path: ./dist/commitme
+        asset_name: linux/commitme
+        asset_content_type: application/octet-stream
+    - name: Upload Linux Artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        asset_path: commitme.properties.json.template
+        asset_name: linux/commitme.properties.json.template
+        asset_content_type: application/octet-stream
 
   build-macos:
     runs-on: macos-latest
@@ -47,10 +56,19 @@ jobs:
       run: pip install pyinstaller
     - name: Build Binary with PyInstaller for macOS
       run: pyinstaller --onefile -n commitme commitme.py
-    - name: Upload macOS Artifact
-      uses: actions/upload-artifact@v4
+    - name: Upload MacOs Artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: macos-binary
-        path: |
-          ./dist/commitme
-          commitme.properties.json.template
+        asset_path: ./dist/commitme
+        asset_name: macos/commitme
+        asset_content_type: application/octet-stream
+    - name: Upload Linux Artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        asset_path: commitme.properties.json.template
+        asset_name: macos/commitme.properties.json.template
+        asset_content_type: application/octet-stream
