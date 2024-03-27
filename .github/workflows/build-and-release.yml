@@ -27,6 +27,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        upload_url: ${{ github.event.release.upload_url }}
         asset_path: ./dist/commitme
         asset_name: linux/commitme
         asset_content_type: application/octet-stream
@@ -35,6 +36,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        upload_url: ${{ github.event.release.upload_url }}
         asset_path: commitme.properties.json.template
         asset_name: linux/commitme.properties.json.template
         asset_content_type: application/octet-stream
@@ -56,19 +58,21 @@ jobs:
       run: pip install pyinstaller
     - name: Build Binary with PyInstaller for macOS
       run: pyinstaller --onefile -n commitme commitme.py
-    - name: Upload MacOs Artifact
+    - name: Upload MacOS Artifact
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        upload_url: ${{ github.event.release.upload_url }}
         asset_path: ./dist/commitme
         asset_name: macos/commitme
         asset_content_type: application/octet-stream
-    - name: Upload Linux Artifact
+    - name: Upload MacOS Artifact
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        upload_url: ${{ github.event.release.upload_url }}
         asset_path: commitme.properties.json.template
         asset_name: macos/commitme.properties.json.template
         asset_content_type: application/octet-stream
