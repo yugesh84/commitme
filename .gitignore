@@ -1,2 +1,5 @@
 venv
 commitme.properties.json
+build/
+commitme.spec
+dist/

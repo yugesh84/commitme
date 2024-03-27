@@ -20,7 +20,7 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
-4. Make a copy of `commitme.properties.json.template` and rename it to `commitme.properties.json`. Fill in the required fields in the file.
+4. Make a copy of `commitme.properties.json.template` and save it at `~/commitme.properties.json`. Fill in the required fields in the file.
 5. Run the tool using the command `python commitme.py`
 
 
@@ -30,12 +30,14 @@ Linux and macos binaries are also attached as assets to the latest release. An [
 
 Steps to use the binary:
 
-_NOTE: This will not fully work now as you'll need to carry over a properties file wherever you use the binary. This is a known issue and will be fixed in the next release._
 1. Download the binary for your OS from the latest release
 2. Rename the downloaded binary to `commitMe`
 3. Make the binary executable using `chmod +x commitMe`
 4. Add the binary to your path
-5. Run the binary using `commitMe` in your git repository. The binary will automatically detect the changes and suggest a commit message.
+5. Download the `commitme.properties.json.template` file from the latest release
+6. Save it in your home dir. Ex: `~/commitme.properties.json`
+7. Fill in the needed information
+8. Run the binary using `commitMe` in your git repository. The binary will automatically detect the changes and suggest a commit message.
 
 ## Contributing
 

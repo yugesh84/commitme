@@ -13,7 +13,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.12.2'
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
@@ -22,18 +22,19 @@ jobs:
       run: pip install pyinstaller
     - name: Build Binary with PyInstaller
       run: pyinstaller --onefile -n commitme commitme.py
-    - name: Upload Release Asset
+    - name: Zip files
+      run: zip linux.zip ./dist/commitme commitme.properties.json.template
+    - name: Upload Linux Artifact
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./dist/commitme
-        asset_name: commitme-${{ github.run_number }}
+        asset_path: linux.zip
+        asset_name: linux.zip
         asset_content_type: application/octet-stream
 
   build-macos:
-        # needs: build
     runs-on: macos-latest
     permissions: write-all
     steps:
@@ -41,7 +42,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.12.2'
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
@@ -50,12 +51,14 @@ jobs:
       run: pip install pyinstaller
     - name: Build Binary with PyInstaller for macOS
       run: pyinstaller --onefile -n commitme commitme.py
-    - name: Upload macOS Release Asset
+    - name: Zip files
+      run: zip macos.zip ./dist/commitme commitme.properties.json.template
+    - name: Upload MacOS Artifact
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./dist/commitme
-        asset_name: commitme-macos-${{ github.run_number }}
+        asset_path: macos.zip
+        asset_name: macos.zip
         asset_content_type: application/octet-stream
