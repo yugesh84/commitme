@@ -22,23 +22,16 @@ jobs:
       run: pip install pyinstaller
     - name: Build Binary with PyInstaller
       run: pyinstaller --onefile -n commitme commitme.py
+    - name: Zip files
+      run: zip linux.zip ./dist/commitme commitme.properties.json.template
     - name: Upload Linux Artifact
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./dist/commitme
-        asset_name: linux/commitme
-        asset_content_type: application/octet-stream
-    - name: Upload Linux Artifact
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: commitme.properties.json.template
-        asset_name: linux/commitme.properties.json.template
+        asset_path: linux.zip
+        asset_name: linux.zip
         asset_content_type: application/octet-stream
 
   build-macos:
@@ -58,21 +51,14 @@ jobs:
       run: pip install pyinstaller
     - name: Build Binary with PyInstaller for macOS
       run: pyinstaller --onefile -n commitme commitme.py
+    - name: Zip files
+      run: zip macos.zip ./dist/commitme commitme.properties.json.template
     - name: Upload MacOS Artifact
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./dist/commitme
-        asset_name: macos/commitme
-        asset_content_type: application/octet-stream
-    - name: Upload MacOS Artifact
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: commitme.properties.json.template
-        asset_name: macos/commitme.properties.json.template
+        asset_path: macos.zip
+        asset_name: macos.zip
         asset_content_type: application/octet-stream
