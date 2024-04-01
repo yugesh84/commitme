@@ -1,3 +1,4 @@
+import argparse
 import json
 from langchain_community.llms import Ollama
 import subprocess
@@ -87,6 +88,13 @@ def load_properties():
     return properties
 
 def main():
+    parser = argparse.ArgumentParser(description='Check for any optional arguments')
+    parser.add_argument('--configure', action='store_true', help='Configure CLI')
+    args = parser.parse_args()
+
+    if args.configure:
+        print("TODO - Implement this!")
+        return
     properties = load_properties()
     currentDiff = get_staged_changeset()
     if(not is_staged_changes(currentDiff)):
